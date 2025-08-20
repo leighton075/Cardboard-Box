@@ -19,10 +19,10 @@ if __name__ == "__main__":
     image_source = sys.argv[1]
     img = get_image(image_source)
     box = AsciiArt.from_pillow_image(img)
-    box.to_html_file('ascii_art.html', columns=500, additional_styles="background:black; color:#0f0;")
+    box.to_html_file('index.html', columns=500, additional_styles="background:black; color:#0f0;")
 
     # Amend the HTML file to add custom styles
-    with open('ascii_art.html', 'r', encoding='utf-8') as f:
+    with open('index.html', 'r', encoding='utf-8') as f:
         html = f.read()
 
     style_block = """
@@ -43,5 +43,5 @@ if __name__ == "__main__":
     else:
         html = style_block + html
 
-    with open('ascii_art.html', 'w', encoding='utf-8') as f:
+    with open('index.html', 'w', encoding='utf-8') as f:
         f.write(html)

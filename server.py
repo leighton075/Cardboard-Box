@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return send_from_directory('.', 'ascii_art.html')
+    return send_from_directory('.', 'index.html')
 
 @app.route('/ascii', methods=['POST'])
 def ascii_art():
