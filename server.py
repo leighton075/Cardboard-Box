@@ -11,7 +11,7 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory('/home/Leighton075/Cardboard-Box', 'index.html')
 
 @app.route('/ascii', methods=['POST'])
 def ascii_art():
