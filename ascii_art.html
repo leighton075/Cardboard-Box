@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ASCII Art</title>
+    <style>
+        body {
+            background: black;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        #input-bar {
+            width: 100%;
+            padding: 16px;
+            background: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+        label {
+            color: #ccc;
+            font-size: 16px;
+            margin-right: 4px;
+        }
+        #image-url {
+            width: 400px;
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: none;
+            margin-right: 8px;
+        }
+        #columns {
+            width: 80px;
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: none;
+            margin-right: 8px;
+        }
+        #ascii-art {
+            margin-top: 32px;
+            color: #0f0;
+            font-size: 8px;
+            background: black;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+    <div id="input-bar">
+        <label for="image-url">Image URL:</label>
+        <input type="text" id="image-url" placeholder="Paste image URL here..." />
+        <label for="columns">Columns (300 Recommended):</label>
+        <input type="number" id="columns" value="400" min="10" max="1000" />
+        <button onclick="convertImage()">Convert</button>
+    </div>
+    <pre id="ascii-art"></pre>
+    <script>
+        // Clear input boxes on reload
+        window.onload = function() {
+            document.getElementById('image-url').value = '';
+            document.getElementById('columns').value = '';
+            document.getElementById('ascii-art').textContent = '';
+        };
+
+        function convertImage() {
+            const url = document.getElementById('image-url').value;
+            const columns = parseInt(document.getElementById('columns').value, 10) || 400;
+            if (!url) return;
+            document.getElementById('ascii-art').textContent = "Loading...";
+            fetch('/ascii', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url, columns })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.html) {
+                    document.getElementById('ascii-art').innerHTML = data.html;
+                } else {
+                    document.getElementById('ascii-art').textContent = "Error: " + (data.error || "Unknown error");
+                }
+            })
+            .catch(err => {
+                document.getElementById('ascii-art').textContent = "Error: " + err;
+            });
+        }
+    </script>
+</body>
+</html>
