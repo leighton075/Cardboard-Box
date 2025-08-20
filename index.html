@@ -73,7 +73,7 @@
             const columns = parseInt(document.getElementById('columns').value, 10) || 400;
             if (!url) return;
             document.getElementById('ascii-art').textContent = "Loading...";
-            fetch('https://0d94b426f53e.ngrok-free.app/ascii', {
+            fetch('/ascii', { 
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url, columns })
