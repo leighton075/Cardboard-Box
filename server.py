@@ -4,8 +4,10 @@ import requests
 from PIL import Image
 from ascii_magic import AsciiArt
 import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def index():
